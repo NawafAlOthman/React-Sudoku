@@ -26,10 +26,13 @@ function App() {
         <div className="wrapper">
           <div className="field grid grid-rows-9 content-center ">
             {grid.map((row, rowIndex) => (
-              <div className=" grid grid-cols-9 content-center " key={rowIndex}>
+              <div
+                className=" srow grid grid-cols-9 content-center "
+                key={rowIndex}
+              >
                 {row.map((number, colIndex) => (
                   <input
-                    className="something"
+                    className="something "
                     key={colIndex}
                     type="text"
                     placeholder=" "
