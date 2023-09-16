@@ -25,7 +25,7 @@ function initGrid(puzzle) {
 
 function handleChanges(e, grid, setGrid) {}
 
-function App() {
+function SudokuGrid() {
   let puzzle = makepuzzle();
   let solution = solvepuzzle(puzzle);
 
@@ -46,11 +46,13 @@ function App() {
               >
                 {row.map((number, colIndex) => (
                   <input
-                    className="something transition duration-300 ease-in-out focus:outline-none  focus:ring-purple-600 "
+                    className={`something transition duration-300 ease-in-out focus:outline-none  focus:ring-purple-600 ${
+                      number !== 0 ? "read-only" : "writeable"
+                    } `}
                     key={colIndex}
                     type="text"
                     placeholder={number === 0 ? "" : number}
-                    disabled={number !== 0}
+                    readOnly={number !== 0}
                     maxLength="1"
                     onKeyDown={(e) => {
                       // Allow only digits from 1 to 9 and prevent 0
@@ -70,6 +72,17 @@ function App() {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <div>
+      <div>
+        <h1 className="text-4xl text-center mt-10">Sudoku </h1>
+      </div>
+      <SudokuGrid />
     </div>
   );
 }
