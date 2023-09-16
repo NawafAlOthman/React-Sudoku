@@ -52,11 +52,10 @@
   scale: 2;
 }
 
-/* .read-only:focus {
-  background-color: #e7e5e9;
-  color: black !important;
-} */
-
 .writeable:focus {
   background-color: #9d50d8;
 }
+
+/* input:read-only:focus {
+  background-color: rgb(253, 175, 236);
+} */

@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 
 import { makepuzzle, solvepuzzle, ratepuzzle } from "sudoku";
+
+let puzzle = makepuzzle();
+let solution = solvepuzzle(puzzle);
 
 function initGrid(puzzle) {
   let grid = [];
@@ -17,7 +20,36 @@ function initGrid(puzzle) {
   for (let i = 0; i < puzzle.length; i++) {
     let row = Math.floor(i / 9);
     let col = i % 9;
-    grid[row][col] = parseInt(puzzle[i]) || 0;
+    if (puzzle[i] !== null) {
+      // npm sudoku package uses 0-8 instead of 1-9 which is fucking stupid
+
+      grid[row][col] = parseInt(puzzle[i]) || 9;
+    } else {
+      grid[row][col] = 0;
+    }
+  }
+
+  return grid;
+}
+
+function solutionGrid(solution) {
+  let grid = [];
+  for (let i = 0; i < 9; i++) {
+    grid[i] = [];
+    for (let j = 0; j < 9; j++) {
+      grid[i][j] = 0;
+    }
+  }
+
+  for (let i = 0; i < solution.length; i++) {
+    let row = Math.floor(i / 9);
+    let col = i % 9;
+
+    if (solution[i] !== null) {
+      grid[row][col] = parseInt(solution[i]) || 9;
+    } else {
+      grid[row][col] = 0;
+    }
   }
 
   return grid;
@@ -26,13 +58,16 @@ function initGrid(puzzle) {
 function handleChanges(e, grid, setGrid) {}
 
 function SudokuGrid() {
-  let puzzle = makepuzzle();
-  let solution = solvepuzzle(puzzle);
-
   const [grid, setGrid] = useState(initGrid(puzzle));
 
-  let temp = initGrid(puzzle);
-  console.log(temp);
+  let temp = solutionGrid(solution);
+  console.log("Solution: ", temp);
+
+  useEffect(() => {
+    const newGrid = initGrid(puzzle);
+    const solGrid = solutionGrid(solution);
+    setGrid(newGrid);
+  }, [puzzle]);
 
   return (
     <div>
