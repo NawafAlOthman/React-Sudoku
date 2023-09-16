@@ -23,6 +23,8 @@ function initGrid(puzzle) {
   return grid;
 }
 
+function handleChanges(e, grid, setGrid) {}
+
 function App() {
   let puzzle = makepuzzle();
   let solution = solvepuzzle(puzzle);
@@ -44,7 +46,7 @@ function App() {
               >
                 {row.map((number, colIndex) => (
                   <input
-                    className="something "
+                    className="something transition duration-300 ease-in-out focus:outline-none  focus:ring-purple-600 "
                     key={colIndex}
                     type="text"
                     placeholder={number === 0 ? "" : number}

@@ -18,6 +18,8 @@
   text-align: center;
   font-size: 24px;
   width: 100%;
+  caret-color: transparent;
+  cursor: default;
 }
 
 .something {
@@ -32,7 +34,7 @@
 
 /* Make the sudoku grid have an outline for every 3x3 square*/
 .wrapper input:nth-child(3n) {
-  border-right: 3px solid black;
+  border-right: 2px solid black;
   border-radius: 10px;
 }
 
@@ -43,5 +45,9 @@
 /* in a 9x9 grid, every 3rd row should have a solid border at the bottom and the top */
 
 .srow:nth-child(3n) {
-  border-bottom: 3px solid black;
+  border-bottom: 2px solid black;
+}
+
+.something:focus {
+  background-color: #9d50d8;
 }
