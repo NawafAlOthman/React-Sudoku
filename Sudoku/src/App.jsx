@@ -5,21 +5,33 @@ import "./App.css";
 
 import { makepuzzle, solvepuzzle, ratepuzzle } from "sudoku";
 
-function App() {
-  const [grid, setGrid] = useState([
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  ]);
+function initGrid(puzzle) {
+  let grid = [];
+  for (let i = 0; i < 9; i++) {
+    grid[i] = [];
+    for (let j = 0; j < 9; j++) {
+      grid[i][j] = 0;
+    }
+  }
 
-  console.log(grid);
-  // let puzzle = makepuzzle()
+  for (let i = 0; i < puzzle.length; i++) {
+    let row = Math.floor(i / 9);
+    let col = i % 9;
+    grid[row][col] = parseInt(puzzle[i]) || 0;
+  }
+
+  return grid;
+}
+
+function App() {
+  let puzzle = makepuzzle();
+  let solution = solvepuzzle(puzzle);
+
+  const [grid, setGrid] = useState(initGrid(puzzle));
+
+  let temp = initGrid(puzzle);
+  console.log(temp);
+
   return (
     <div>
       <div className=" flex justify-center mt-10">
@@ -35,7 +47,7 @@ function App() {
                     className="something "
                     key={colIndex}
                     type="text"
-                    placeholder=" "
+                    placeholder={number === 0 ? "" : number}
                     maxLength="1"
                     onKeyDown={(e) => {
                       // Allow only digits from 1 to 9 and prevent 0
