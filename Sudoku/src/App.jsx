@@ -48,6 +48,7 @@ function App() {
                     key={colIndex}
                     type="text"
                     placeholder={number === 0 ? "" : number}
+                    disabled={number !== 0}
                     maxLength="1"
                     onKeyDown={(e) => {
                       // Allow only digits from 1 to 9 and prevent 0
