@@ -62,8 +62,25 @@ function SudokuGrid() {
 
   const [selectedNum, setSelectedNum] = useState(0);
 
-  let temp = solutionGrid(solution);
-  console.log("Solution: ", temp);
+  let solvedGrid = solutionGrid(solution);
+  console.log("Solution: ", solvedGrid);
+
+  const handleInputChange = (e, rowIndex, colIndex) => {
+    const inputValue = parseInt(e.target.value);
+
+    if (!isNaN(inputValue)) {
+      // Clone the current grid to avoid mutating the state directly
+      const newGrid = grid.map((row) => [...row]);
+
+      // Update the corresponding cell in the grid with the input value
+      if (inputValue === solvedGrid[rowIndex][colIndex]) {
+        newGrid[rowIndex][colIndex] = inputValue;
+
+        // Update the state with the new grid
+        setGrid(newGrid);
+      }
+    }
+  };
 
   useEffect(() => {
     const newGrid = initGrid(puzzle);
@@ -98,6 +115,7 @@ function SudokuGrid() {
                     onClick={(e) => {
                       setSelectedNum(number);
                     }}
+                    onChange={(e) => handleInputChange(e, rowIndex, colIndex)}
                     onKeyDown={(e) => {
                       // Allow only digits from 1 to 9 and prevent 0
                       if (
