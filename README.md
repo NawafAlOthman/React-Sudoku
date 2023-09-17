@@ -2,9 +2,9 @@
  React Sudoku
 
 
-Checklist: 
+initial checklist: 
 
--  Get Basic game to work
+-  Get the base game to work
 -  Set a timer to let the user know how long it took them to finish
 -  let users get another puzzle whenever they want
 
