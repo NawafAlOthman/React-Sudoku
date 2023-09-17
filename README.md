@@ -8,6 +8,7 @@ initial checklist:
 -  Set a timer to let the user know how long it took them to finish
 -  let users get another puzzle whenever they want
 -  (allow maximum wrong input before its game over?)
+-  clean the code
 
   In the future:
 -  allow multiple players to play at the same time
