@@ -63,3 +63,7 @@
 .selected-num {
   background-color: #9d50d8 !important;
 }
+
+.wrong-number {
+  background-color: #ff0000 !important;
+}

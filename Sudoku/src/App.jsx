@@ -73,12 +73,18 @@ function SudokuGrid() {
       const newGrid = grid.map((row) => [...row]);
 
       // Update the corresponding cell in the grid with the input value
-      if (inputValue === solvedGrid[rowIndex][colIndex]) {
+      if (inputValue !== solvedGrid[rowIndex][colIndex] && inputValue !== 0) {
+        // Reset the cell to 0 if the value is incorrect
+        newGrid[rowIndex][colIndex] = -1;
+      } else {
         newGrid[rowIndex][colIndex] = inputValue;
-
-        // Update the state with the new grid
-        setGrid(newGrid);
       }
+      // Update the state with the new grid
+      setGrid(newGrid);
+    } else if (e.target.value === "") {
+      const newGrid = grid.map((row) => [...row]);
+      newGrid[rowIndex][colIndex] = 0;
+      setGrid(newGrid);
     }
   };
 
@@ -106,11 +112,15 @@ function SudokuGrid() {
                         : ""
                     } focus:outline-none  focus:ring-purple-600 ${
                       number !== 0 ? "read-only" : "writeable"
+                    } ${
+                      number !== solvedGrid[rowIndex][colIndex] && number !== 0
+                        ? "wrong-number"
+                        : ""
                     } `}
                     key={colIndex}
                     type="text"
-                    placeholder={number === 0 ? "" : number}
-                    readOnly={number !== 0}
+                    placeholder={number === 0 || number === -1 ? "" : number}
+                    readOnly={number === solvedGrid[rowIndex][colIndex]}
                     maxLength="1"
                     onClick={(e) => {
                       setSelectedNum(number);
