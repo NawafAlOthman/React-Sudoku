@@ -59,3 +59,7 @@
 /* input:read-only:focus {
   background-color: rgb(253, 175, 236);
 } */
+
+.selected-num {
+  background-color: #9d50d8 !important;
+}

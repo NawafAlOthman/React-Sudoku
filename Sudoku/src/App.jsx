@@ -60,6 +60,8 @@ function handleChanges(e, grid, setGrid) {}
 function SudokuGrid() {
   const [grid, setGrid] = useState(initGrid(puzzle));
 
+  const [selectedNum, setSelectedNum] = useState(0);
+
   let temp = solutionGrid(solution);
   console.log("Solution: ", temp);
 
@@ -81,7 +83,11 @@ function SudokuGrid() {
               >
                 {row.map((number, colIndex) => (
                   <input
-                    className={`something transition duration-300 ease-in-out focus:outline-none  focus:ring-purple-600 ${
+                    className={`something transition duration-300 ease-in-out ${
+                      number === selectedNum && number !== 0
+                        ? "selected-num"
+                        : ""
+                    } focus:outline-none  focus:ring-purple-600 ${
                       number !== 0 ? "read-only" : "writeable"
                     } `}
                     key={colIndex}
@@ -89,6 +95,9 @@ function SudokuGrid() {
                     placeholder={number === 0 ? "" : number}
                     readOnly={number !== 0}
                     maxLength="1"
+                    onClick={(e) => {
+                      setSelectedNum(number);
+                    }}
                     onKeyDown={(e) => {
                       // Allow only digits from 1 to 9 and prevent 0
                       if (
