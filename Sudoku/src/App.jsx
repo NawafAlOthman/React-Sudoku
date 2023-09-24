@@ -5,9 +5,6 @@ import "./App.css";
 
 import { makepuzzle, solvepuzzle, ratepuzzle } from "sudoku";
 
-let puzzle = makepuzzle();
-let solution = solvepuzzle(puzzle);
-
 function initGrid(puzzle) {
   let grid = [];
   for (let i = 0; i < 9; i++) {
@@ -57,13 +54,15 @@ function solutionGrid(solution) {
 
 function handleChanges(e, grid, setGrid) {}
 
-function SudokuGrid() {
+function SudokuGrid({ puzzle, solution }) {
   const [grid, setGrid] = useState(initGrid(puzzle));
+  const [solGrid, setSolGrid] = useState(solutionGrid(solution));
 
   const [selectedNum, setSelectedNum] = useState(0);
 
   let solvedGrid = solutionGrid(solution);
-  console.log("Solution: ", solvedGrid);
+
+  console.log("puzzle in grid: ", grid);
 
   const handleInputChange = (e, rowIndex, colIndex) => {
     const inputValue = parseInt(e.target.value);
@@ -90,9 +89,10 @@ function SudokuGrid() {
 
   useEffect(() => {
     const newGrid = initGrid(puzzle);
-    const solGrid = solutionGrid(solution);
+    const newSol = solutionGrid(solution);
     setGrid(newGrid);
-  }, [puzzle]);
+    setSolGrid(newSol);
+  }, [puzzle, solution]);
 
   return (
     <div>
@@ -113,14 +113,14 @@ function SudokuGrid() {
                     } focus:outline-none  focus:ring-purple-600 ${
                       number !== 0 ? "read-only" : "writeable"
                     } ${
-                      number !== solvedGrid[rowIndex][colIndex] && number !== 0
+                      number !== solGrid[rowIndex][colIndex] && number !== 0
                         ? "wrong-number"
                         : ""
                     } `}
                     key={colIndex}
                     type="text"
                     placeholder={number === 0 || number === -1 ? "" : number}
-                    readOnly={number === solvedGrid[rowIndex][colIndex]}
+                    readOnly={number === solGrid[rowIndex][colIndex]}
                     maxLength="1"
                     onClick={(e) => {
                       setSelectedNum(number);
@@ -149,12 +149,41 @@ function SudokuGrid() {
 }
 
 function App() {
+  const [puzzle, setPuzzle] = useState(makepuzzle());
+  const [solution, setSolution] = useState(solvepuzzle(puzzle));
+
+  const handleNewPuzzle = () => {
+    const newPuzzle = makepuzzle();
+    const newSolution = solvepuzzle(newPuzzle);
+    setPuzzle(newPuzzle);
+    setSolution(newSolution); // Update the solution state with the new solution
+  };
+
+  const handleSolvePuzzle = () => {
+    setSolution(solvepuzzle(puzzle)); // Update the solution state, not the puzzle state
+  };
+
+  console.log("Puzzle: ", puzzle);
+
   return (
     <div>
       <div>
         <h1 className="text-4xl text-center mt-10">Sudoku </h1>
       </div>
-      <SudokuGrid />
+      <div className="flex flex-row  justify-evenly items-center">
+        <SudokuGrid solution={solution} puzzle={puzzle} />
+        <div className="flex flex-col justify-evenly -ml-15">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={handleNewPuzzle}
+          >
+            Generate New Puzzle
+          </button>
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-8">
+            Solve Puzzle
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
