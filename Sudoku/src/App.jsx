@@ -90,6 +90,9 @@ function SudokuGrid({ puzzle, solution }) {
   useEffect(() => {
     const newGrid = initGrid(puzzle);
     const newSol = solutionGrid(solution);
+    Array.from(document.querySelectorAll("input")).forEach(
+      (input) => (input.value = "")
+    );
     setGrid(newGrid);
     setSolGrid(newSol);
   }, [puzzle, solution]);
@@ -155,8 +158,14 @@ function App() {
   const handleNewPuzzle = () => {
     const newPuzzle = makepuzzle();
     const newSolution = solvepuzzle(newPuzzle);
+
     setPuzzle(newPuzzle);
     setSolution(newSolution); // Update the solution state with the new solution
+
+    const inputElements = document.querySelectorAll(".writeable");
+    inputElements.forEach((input) => {
+      input.value = "";
+    });
   };
 
   const handleSolvePuzzle = () => {
