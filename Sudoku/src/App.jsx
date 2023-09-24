@@ -169,7 +169,7 @@ function App() {
   };
 
   const handleSolvePuzzle = () => {
-    setSolution(solvepuzzle(puzzle)); // Update the solution state, not the puzzle state
+    setPuzzle(solution);
   };
 
   console.log("Puzzle: ", puzzle);
@@ -188,7 +188,10 @@ function App() {
           >
             Generate New Puzzle
           </button>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-8">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-8"
+            onClick={handleSolvePuzzle}
+          >
             Solve Puzzle
           </button>
         </div>
