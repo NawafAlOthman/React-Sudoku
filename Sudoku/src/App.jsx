@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
+import Stopwatch from "./Stopwatch";
 import "./App.css";
 
 import { makepuzzle, solvepuzzle, ratepuzzle } from "sudoku";
@@ -54,11 +55,15 @@ function solutionGrid(solution) {
 
 function handleChanges(e, grid, setGrid) {}
 
+
+
 function SudokuGrid({ puzzle, solution }) {
   const [grid, setGrid] = useState(initGrid(puzzle));
   const [solGrid, setSolGrid] = useState(solutionGrid(solution));
 
   const [selectedNum, setSelectedNum] = useState(0);
+
+
 
   let solvedGrid = solutionGrid(solution);
 
@@ -98,8 +103,8 @@ function SudokuGrid({ puzzle, solution }) {
   }, [puzzle, solution]);
 
   return (
-    <div>
-      <div className=" flex justify-center mt-10">
+    <div> 
+      <div className=" sudgrid flex justify-center mt-10">
         <div className="wrapper">
           <div className="field grid grid-rows-9 content-center ">
             {grid.map((row, rowIndex) => (
@@ -155,12 +160,17 @@ function App() {
   const [puzzle, setPuzzle] = useState(makepuzzle());
   const [solution, setSolution] = useState(solvepuzzle(puzzle));
 
+  const [reset, setReset] = useState(false)
+  const [stoppage, setStoppage] = useState(false)
+
   const handleNewPuzzle = () => {
     const newPuzzle = makepuzzle();
     const newSolution = solvepuzzle(newPuzzle);
 
     setPuzzle(newPuzzle);
     setSolution(newSolution); // Update the solution state with the new solution
+    setReset(true)
+    setStoppage(false)
 
     const inputElements = document.querySelectorAll(".writeable");
     inputElements.forEach((input) => {
@@ -169,19 +179,23 @@ function App() {
   };
 
   const handleSolvePuzzle = () => {
+    
     setPuzzle(solution);
+    setStoppage(true)
   };
 
   console.log("Puzzle: ", puzzle);
 
   return (
     <div>
+      
       <div>
         <h1 className="text-4xl text-center mt-10">Sudoku </h1>
       </div>
       <div className="flex flex-row  justify-evenly items-center">
         <SudokuGrid solution={solution} puzzle={puzzle} />
         <div className="flex flex-col justify-evenly -ml-15">
+        <Stopwatch resetTimer={reset} stopTimer={stoppage}/>
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             onClick={handleNewPuzzle}

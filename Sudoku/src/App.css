@@ -1,23 +1,27 @@
 .field {
   display: flex;
   justify-content: center;
-  width: 25rem;
-  height: 50rem;
+  width:40rem;
+  height: 40rem;
   text-align: center;
 }
 
+.sudgrid{
+  height: 40rem;
+  width: 40rem;
+
+}
 .wrapper input {
   border-radius: 10px;
   color: #e3dac9;
   background-color: #7f45ac;
   padding: 0;
-  margin: 0;
+  margin: 0.5px;
   border: 0;
-  height: 40px;
-  width: 40px;
+  height: 4.3rem;
   text-align: center;
-  font-size: 24px;
-  width: 100%;
+  font-size: 40px;
+
   caret-color: transparent;
   cursor: default;
 }
@@ -25,14 +29,16 @@
 .something {
   padding: 0;
   margin: 0;
-  height: 40px;
-  width: 40px;
   text-align: center;
   vertical-align: center;
   outline: none;
 }
 
 /* Make the sudoku grid have an outline for every 3x3 square*/
+.wrapper input:nth-child(3n+1) {
+  border-right: 1.5px solid black;
+  border-radius: 10px;
+}
 .wrapper input:nth-child(3n) {
   border-right: 2px solid black;
   border-radius: 10px;
@@ -49,7 +55,8 @@
 }
 
 .wrapper {
-  scale: 2;
+  width: 40rem;
+  height: 40rem;
 }
 
 .writeable:focus {
