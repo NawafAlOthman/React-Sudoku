@@ -57,7 +57,7 @@ function handleChanges(e, grid, setGrid) {}
 
 
 
-function SudokuGrid({ puzzle, solution }) {
+function SudokuGrid({ puzzle, solution, onPuzzleSolved }) {
   const [grid, setGrid] = useState(initGrid(puzzle));
   const [solGrid, setSolGrid] = useState(solutionGrid(solution));
 
@@ -91,6 +91,23 @@ function SudokuGrid({ puzzle, solution }) {
       setGrid(newGrid);
     }
   };
+
+  useEffect(() => {
+    if (JSON.stringify(grid) === JSON.stringify(solGrid)) {
+      onPuzzleSolved(true);
+      console.log("puzzle is solved");
+      let num = 1;
+      const intervalId = setInterval(() => {
+        setSelectedNum(num);
+        num++;
+        
+        if (num > 9) {
+          clearInterval(intervalId);
+        }
+      }, 700);
+      setSelectedNum(0);
+    }
+  }, [grid, solGrid]);
 
   useEffect(() => {
     const newGrid = initGrid(puzzle);
@@ -184,7 +201,9 @@ function App() {
     setPuzzle(solution);
     setStoppage(true)
   };
-
+  const handlePuzzleSolved = () => {
+    setStoppage(true);
+  };
   console.log("Puzzle: ", puzzle);
 
   return (
@@ -194,7 +213,7 @@ function App() {
         <h1 className="text-4xl text-center mt-10">Sudoku </h1>
       </div>
       <div className="flex flex-row  justify-evenly items-center">
-        <SudokuGrid solution={solution} puzzle={puzzle} />
+      <SudokuGrid solution={solution} puzzle={puzzle} onPuzzleSolved={handlePuzzleSolved} />
         <div className="flex flex-col justify-evenly -ml-15">
         <Stopwatch resetTimer={reset} stopTimer={stoppage}/>
           <button
