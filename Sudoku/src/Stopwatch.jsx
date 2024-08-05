@@ -18,12 +18,14 @@ const Stopwatch = ({ resetTimer, stopTimer }) => {
     if (resetTimer) {
       setTime(0);
       setIsRunning(true)
+      
     }
   }, [resetTimer]);
 
   useEffect(() => {
+    
     if (stopTimer) {
-      setIsRunning(false);
+      setIsRunning(false)
     }
   }, [stopTimer]);
 

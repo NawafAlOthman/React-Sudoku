@@ -169,7 +169,8 @@ function App() {
 
     setPuzzle(newPuzzle);
     setSolution(newSolution); // Update the solution state with the new solution
-    setReset(true)
+    setReset(true);
+    setTimeout(() => setReset(false), 0); // Ensures the timer is reset correctly
     setStoppage(false)
 
     const inputElements = document.querySelectorAll(".writeable");
